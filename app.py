@@ -1,16 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-# ---------- Page setup ----------
 st.set_page_config(page_title="Exam Progress Tracker", layout="centered")
 st.title("📊 Exam Progress Tracker")
 
-# ---------- Session state (replaces the CSV file) ----------
-# Data only lives for this browser session — it resets if you close the tab.
 if "df" not in st.session_state:
     st.session_state.df = pd.DataFrame(columns=["subject", "mark", "mistakes"])
 
-# ---------- Core logic (same as your original Progress class) ----------
 class Progress:
     def __init__(self, df):
         self.df = df
@@ -50,7 +46,6 @@ class Progress:
 
 p = Progress(st.session_state.df)
 
-# ---------- Mistake options ----------
 MISTAKE_OPTIONS = {
     "c": "Conceptual",
     "p": "Exam pressure",
@@ -59,12 +54,11 @@ MISTAKE_OPTIONS = {
     "x": "Nothing",
 }
 
-# ---------- Add Subject form ----------
-st.subheader("Add a Subject")
+st.subheader("Add Subjects, Marks and Mistakes")
 
 with st.form("add_subject_form", clear_on_submit=True):
     subject = st.text_input("Subject")
-    mark = st.number_input("Mark (out of 25)", min_value=0, max_value=25, step=1)
+    mark = st.number_input("Mark (out of 25)", min_value=0.0, max_value=25.0, step=0.1)
 
     st.write("Mistakes")
     cols = st.columns(len(MISTAKE_OPTIONS))
@@ -82,10 +76,9 @@ with st.form("add_subject_form", clear_on_submit=True):
         elif not selected:
             st.error("Please select at least one mistake.")
         else:
-            p.add_entry(subject.strip(), int(mark), selected)
+            p.add_entry(subject.strip(), float(mark), selected)
             st.success(f"{subject} added successfully.")
 
-# ---------- Action buttons ----------
 st.subheader("Your Progress")
 
 col1, col2 = st.columns(2)
@@ -93,7 +86,7 @@ show_result = col1.button("Show Result", use_container_width=True)
 show_graph = col2.button("Show Graph", use_container_width=True)
 
 if st.session_state.df.empty:
-    st.info("No data yet — add a subject above to get started.")
+    st.info("No data yet — add subjects above to get started.")
 else:
     if show_result:
         result_df = p.analyse()
@@ -106,7 +99,6 @@ else:
     with st.expander("View raw data"):
         st.dataframe(st.session_state.df, use_container_width=True, hide_index=True)
 
-# ---------- Reset ----------
 st.divider()
 if st.button("🗑️ Clear all data"):
     st.session_state.df = pd.DataFrame(columns=["subject", "mark", "mistakes"])
