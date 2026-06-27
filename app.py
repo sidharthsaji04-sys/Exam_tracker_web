@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Exam Progress Tracker", layout="centered")
+west.set_page_config(page_title="Exam Progress Tracker", layout="centered")
 st.title("📊 Exam Progress Tracker")
 
 if "df" not in st.session_state:
@@ -103,8 +103,5 @@ st.divider()
 if st.button("🗑️ Clear all data"):
     st.session_state.df = pd.DataFrame(columns=["subject", "mark", "mistakes"])
     st.rerun()
-st.divider()
 
-
-st.divider()
 st.markdown("**Follow me on Instagram:** [@__sidharthh._](https://instagram.com/__sidharthh._)")    
