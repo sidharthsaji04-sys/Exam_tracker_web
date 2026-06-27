@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-west.set_page_config(page_title="Exam Progress Tracker", layout="centered")
+st.set_page_config(page_title="Exam Progress Tracker", layout="centered")
 st.title("📊 Exam Progress Tracker")
 
 if "df" not in st.session_state:
