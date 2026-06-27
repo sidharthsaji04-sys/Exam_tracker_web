@@ -103,3 +103,8 @@ st.divider()
 if st.button("🗑️ Clear all data"):
     st.session_state.df = pd.DataFrame(columns=["subject", "mark", "mistakes"])
     st.rerun()
+st.divider()
+
+
+st.divider()
+st.markdown("**Follow me on Instagram:** [@__sidharthh._](https://instagram.com/__sidharthh._)")    
